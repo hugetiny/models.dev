@@ -4,11 +4,23 @@ import { mergeDeep } from "remeda";
 import { z } from "zod";
 
 import { AuthoredModel, AuthoredModelShape } from "../schema.js";
+import { ambient } from "./providers/ambient.js";
+import { cloudflareAiGateway } from "./providers/cloudflare-ai-gateway.js";
 import { cloudflareWorkersAi } from "./providers/cloudflare-workers-ai.js";
+import { chutes } from "./providers/chutes.js";
+import { databricks } from "./providers/databricks.js";
+import { digitalocean } from "./providers/digitalocean.js";
+import { friendli } from "./providers/friendli.js";
 import { google } from "./providers/google.js";
+import { helicone } from "./providers/helicone.js";
+import { jiekou } from "./providers/jiekou.js";
+import { ollamaCloud } from "./providers/ollama-cloud.js";
+import { opencodeZen } from "./providers/opencode-zen.js";
 import { openrouter } from "./providers/openrouter.js";
 import { ovhcloud } from "./providers/ovhcloud.js";
+import { venice } from "./providers/venice.js";
 import { vercel } from "./providers/vercel.js";
+import { wandb } from "./providers/wandb.js";
 import { xai } from "./providers/xai.js";
 
 const ExistingModelType = AuthoredModelShape.partial()
@@ -72,25 +84,50 @@ export interface SyncResult {
 }
 
 export const providers: {
+  ambient: SyncProvider<any>;
+  "cloudflare-ai-gateway": SyncProvider<any>;
   "cloudflare-workers-ai": SyncProvider<any>;
+  chutes: SyncProvider<any>;
+  databricks: SyncProvider<any>;
+  digitalocean: SyncProvider<any>;
+  friendli: SyncProvider<any>;
   google: SyncProvider<any>;
+  helicone: SyncProvider<any>;
+  jiekou: SyncProvider<any>;
+  "ollama-cloud": SyncProvider<any>;
+  "opencode-zen": SyncProvider<any>;
   openrouter: SyncProvider<any>;
   ovhcloud: SyncProvider<any>;
+  venice: SyncProvider<any>;
   vercel: SyncProvider<any>;
+  wandb: SyncProvider<any>;
   xai: SyncProvider<any>;
 } = {
+  ambient,
+  "cloudflare-ai-gateway": cloudflareAiGateway,
   "cloudflare-workers-ai": cloudflareWorkersAi,
+  chutes,
+  databricks,
+  digitalocean,
+  friendli,
   google,
+  helicone,
+  jiekou,
+  "ollama-cloud": ollamaCloud,
+  "opencode-zen": opencodeZen,
   openrouter,
   ovhcloud,
+  venice,
   vercel,
+  wandb,
   xai,
 };
 
 export const groups = {
-  aggregators: ["openrouter", "vercel"],
-  cloudflare: ["cloudflare-workers-ai"],
-  direct: ["google", "ovhcloud", "xai"],
+  aggregators: ["openrouter", "vercel", "chutes"],
+  cloudflare: ["cloudflare-workers-ai", "cloudflare-ai-gateway"],
+  direct: ["google", "ovhcloud", "xai", "ambient", "databricks", "friendli", "helicone", "ollama-cloud", "venice", "wandb"],
+  marketplace: ["digitalocean", "jiekou", "opencode-zen"],
 } as const;
 
 type ProviderID = keyof typeof providers;
